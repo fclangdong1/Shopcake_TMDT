@@ -1,0 +1,231 @@
+<?php
+
+/*
+|--------------------------------------------------------------------------
+| Web Routes
+|--------------------------------------------------------------------------
+|
+| Here is where you can register web routes for your application. These
+| routes are loaded by the RouteServiceProvider within a group which
+| contains the "web" middleware group. Now create something great!
+|
+*/
+
+Route::get('/', function () {
+    return view('welcome');
+});
+
+Route::get('index',[
+	'as'=>'trang-chu',
+	'uses'=>'PageController@getIndex'
+]);
+Route::post('search-product',[
+	'as'=>'search',
+	'uses'=>'PageController@searchProduct'
+]);
+Route::get('loai-san-pham/{type}',[
+	'as'=>'loaisanpham',
+	'uses'=>'PageController@getLoaiSp'
+]);
+Route::get('add-comment/{id}',[
+	'as'=>'getcomment',
+	'uses'=>'PageController@addComment'
+])->middleware('checkLoginCustomer');
+Route::get('chi-tiet-san-pham/{id}',[
+	'as'=>'chitietsanpham',
+	'uses'=>'PageController@getChitiet'
+]);
+
+Route::get('lien-he',[
+	'as'=>'lienhe',
+	'uses'=>'PageController@getLienHe'
+]);
+
+Route::get('gioi-thieu',[
+	'as'=>'gioithieu',
+	'uses'=>'PageController@getGioiThieu'
+]);
+
+Route::get('add-to-cart/{id}',[
+	'as'=>'themgiohang',
+	'uses'=>'PageController@getAddtoCart'
+]);
+
+Route::get('del-cart/{id}',[
+	'as'=>'xoagiohang',
+	'uses'=>'PageController@getDelItemCart'
+]);
+Route::get('dat-hang',[
+	'as'=>'dathang',
+	'uses'=>'PageController@getCheckout'
+]);
+
+Route::post('dat-hang',[
+	'as'=>'dathang',
+	'uses'=>'PageController@postCheckout'
+]);
+
+Route::get('dang-nhap',[
+	'as'=>'login',
+	'uses'=>'PageController@getLogin'
+]);
+Route::post('dang-nhap',[
+	'as'=>'login',
+	'uses'=>'PageController@postLogin'
+]);
+
+Route::get('dang-ki',[
+	'as'=>'signin',
+	'uses'=>'PageController@getSignin'
+]);
+
+Route::post('dang-ki',[
+	'as'=>'signin',
+	'uses'=>'PageController@postSignin'
+]);
+
+Route::get('dang-xuat',[
+	'as'=>'logout',
+	'uses'=>'PageController@postLogout'
+]);
+Route::get('adminad', 'AdminController@loginad');
+
+Route::post('admin-product',[
+	'as'=>'loginad',
+	'uses'=>'AdminController@postLoginad'
+]);
+Route::get('show-product',[
+	'as'=>"product",
+	'uses'=>'AdminController@showProduct'
+])->middleware('checkLoginAdmin');
+Route::get('show-product/{id}',[
+	'as'=>"deleteproduct",
+	'uses'=>'AdminController@deleteProduct'
+])->middleware('checkLoginAdmin');
+Route::get('edit-product/{id}',[
+	'as'=>"editproduct",
+	'uses'=>'AdminController@editProduct'
+])->middleware('checkLoginAdmin');
+Route::get('fnedit-product/{id}',[
+	'as'=>"finishedit",
+	'uses'=>'AdminController@editFinal'
+])->middleware('checkLoginAdmin');
+Route::get('add-product',[
+	'as'=>"addproduct",
+	'uses'=>'AdminController@addProduct'
+])->middleware('checkLoginAdmin');
+Route::post('add-productfn',[
+	'as'=>"finishaddproduct",
+	'uses'=>'AdminController@addProductFn'
+])->middleware('checkLoginAdmin');
+Route::get('list-typeproduct',[
+	'as'=>"listtypeproduct",
+	'uses'=>'AdminController@showTypeProduct'
+])->middleware('checkLoginAdmin');
+Route::get('add-typeproduct',[
+	'as'=>"addtypeproduct",
+	'uses'=>'AdminController@addTypeProduct'
+])->middleware('checkLoginAdmin');
+Route::post('add-producttypefn',[
+	'as'=>"finishaddtypeproduct",
+	'uses'=>'AdminController@addTypeProductFn'
+])->middleware('checkLoginAdmin');
+Route::get('delete-type/{id}',[
+	'as'=>"deletetypeproduct",
+	'uses'=>'AdminController@deleteTypeProduct'
+])->middleware('checkLoginAdmin');
+Route::get('edit-typeproduct/{type}',[
+	'as'=>"edittypeproduct",
+	'uses'=>'AdminController@editTypeProduct'
+])->middleware('checkLoginAdmin');
+Route::get('fnedit-typeproduct/{id}',[
+	'as'=>"edittypefn",
+	'uses'=>'AdminController@editTypeFinal'
+])->middleware('checkLoginAdmin');
+Route::get('list-order',[
+	'as'=>"listorder",
+	'uses'=>'AdminController@listOrder'
+])->middleware('checkLoginAdmin');
+Route::get('confirm-order/{id}',[
+	'as'=>"confirmorder",
+	'uses'=>'AdminController@confirmOrder'
+])->middleware('checkLoginAdmin');
+Route::get('delete-order/{id}',[
+	'as'=>"deleteorder",
+	'uses'=>'AdminController@deleteOrder'
+])->middleware('checkLoginAdmin');
+Route::get('list-user',[
+	'as'=>"listuser",
+	'uses'=>'AdminController@listUser'
+])->middleware('checkLoginAdmin');
+Route::get('list-customer',[
+	'as'=>"listcustomer",
+	'uses'=>'AdminController@listCustomer'
+])->middleware('checkLoginAdmin');
+Route::get('login/{provider}',[
+	'as'=>'provider_login',
+	'uses'=>'PageController@redirectToProvider'
+]);
+Route::get('{provider}/callback',[
+	'as'=>'provider_login_callback',
+	'uses'=>'PageController@handleProviderCallback'
+]);
+Route::resource('payment','PaypalController');
+Route::get('make-promotion',[
+	'as'=>'makepromotion',
+	'uses'=>'AdminController@makePromotion'
+])->middleware('checkLoginAdmin');
+
+Route::get('dathang/capnhatso',[
+	'as'=>'dathang/capnhatso',
+	'uses'=>'PageController@addQty'
+]);
+
+Route::get('wait_order',[
+	'as'=>'orderwait',
+	'uses'=>'AdminController@orderWait'
+])->middleware('checkLoginAdmin');
+Route::get('detail_order/{id}',[
+	'as'=>'detailorder',
+	'uses'=>'AdminController@orderDetail'
+])->middleware('checkLoginAdmin');
+Route::get('order_finish',[
+	'as'=>'orderfinish',
+	'uses'=>'AdminController@orderFinish'
+])->middleware('checkLoginAdmin');
+Route::get('add_promotion',[
+	'as'=>'addpromotion',
+	'uses'=>'AdminController@addPromotion'
+])->middleware('checkLoginAdmin');
+Route::post('add_promotion_fn',[
+	'as'=>'finishaddpromotion',
+	'uses'=>'AdminController@finishAddpromotion'
+])->middleware('checkLoginAdmin');
+Route::get('detail_promotion/{id}',[
+	'as'=>'detailpromotion',
+	'uses'=>'AdminController@detailPromotion'
+])->middleware('checkLoginAdmin');
+Route::get('thong_ke',[
+	'as'=>'thongke',
+	'uses'=>'AdminController@thongKe'
+])->middleware('checkLoginAdmin');
+Route::get('addproduct/promotion',[
+	'as'=>'addproduct/promotion',
+	'uses'=>'AdminController@addProductPr'
+]);
+Route::get('inhoadon/{ma}',[
+	'as'=>'inhoadon',
+	'uses'=>'AdminController@inHoadon'
+]);
+Route::get('quenmatkhau',[
+	'as'=>'quenmatkhau',
+	'uses'=>'AdminController@quenmatkhau'
+]);
+Route::post('ressetpass',[
+	'as'=>'ressetpass',
+	'uses'=>'AdminController@ressetpass'
+]);
+Route::get('deletepromotion/{id}',[
+	'as'=>'deletepromotion',
+	'uses'=>'AdminController@deletePromotionpr'
+]);
